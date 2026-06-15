@@ -94,14 +94,8 @@ async function makeDetailMessageAndReadme(data) {
   const dateInfo = submissionTime ?? getDateString(new Date(Date.now()));
   const readme = `# [${level}] ${title} - ${problemId} \n\n`
     + `[문제 링크](https://www.acmicpc.net/problem/${problemId}) \n\n`
-    + `### 성능 요약\n\n`
-    + `메모리: ${memory} KB, `
-    + `시간: ${runtime} ms\n\n`
     + `### 분류\n\n`
     + `${category || "Empty"}\n\n`
-    + `### 제출 일자\n\n`
-    + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language)
     + (deleted
         ? `### 안내\n\n`
           + `이 문제는 출제자에 의해 삭제되었거나 비공개 상태로 전환되어 설명을 가져올 수 없습니다.\n\n`
@@ -109,7 +103,13 @@ async function makeDetailMessageAndReadme(data) {
             ? `### 문제 설명\n\n${problem_description}\n\n`
               + `### 입력 \n\n ${problem_input}\n\n`
               + `### 출력 \n\n ${problem_output}\n\n`
-            : ''));
+            : ''))
+    + getMarkdownCodeBlock(code, language)
+    + `### 제출 일자\n\n`
+    + `${dateInfo}\n\n`
+    + `### 성능 요약\n\n`
+    + `메모리: ${memory} KB, `
+    + `시간: ${runtime} ms\n\n`;
   return {
     directory,
     fileName,

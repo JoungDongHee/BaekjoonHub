@@ -226,13 +226,13 @@ async function makeData(origin) {
   const readme =
     `# [${level}] ${title} - ${problemId} \n\n`
     + `[문제 링크](${link}) \n\n`
+    + getMarkdownCodeBlock(code, language)
+    + `### 제출 일자\n\n`
+    + `${dateInfo}\n\n`
     + `### 성능 요약\n\n`
     + `메모리: ${memory}, `
     + `시간: ${runtime}, `
     + `코드길이: ${length} Bytes\n\n`
-    + `### 제출 일자\n\n`
-    + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language)
     + `> 출처: SW Expert Academy, https://swexpertacademy.com/main/code/problem/problemList.do`;
   return { problemId, directory, message, fileName, readme, code };
 }
@@ -458,13 +458,13 @@ async function makeDataForBulkUploadSWEA(origin) {
   const readme =
     `# [${level}] ${title} - ${problemId} \n\n`
     + `[문제 링크](${link}) \n\n`
+    + getMarkdownCodeBlock(code, language)
+    + `### 제출 일자\n\n`
+    + `${dateInfo}\n\n`
     + `### 성능 요약\n\n`
     + `메모리: ${memory}, `
     + `시간: ${runtime}, `
     + `코드길이: ${length} Bytes\n\n`
-    + `### 제출 일자\n\n`
-    + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language)
     + `> 출처: SW Expert Academy, https://swexpertacademy.com/main/code/problem/problemList.do`;
   return { problemId, directory, message, fileName, readme, code };
 }

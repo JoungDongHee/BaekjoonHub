@@ -88,18 +88,18 @@ async function makeData(origin) {
   const readme =
     `# [${levelWithLv}] ${title} - ${problemId} \n\n`
     + `[문제 링크](${link}) \n\n`
+    + `### 구분\n\n`
+    + `${division.replace('/', ' > ')}\n\n`
+    + `### 문제 설명\n\n`
+    + `${problem_description}\n\n`
+    + getMarkdownCodeBlock(code, language)
+    + `### 제출 일자\n\n`
+    + `${dateInfo}\n\n`
     + `### 성능 요약\n\n`
     + `메모리: ${memory}, `
     + `시간: ${runtime}\n\n`
-    + `### 구분\n\n`
-    + `${division.replace('/', ' > ')}\n\n`
     + `### 채점결과\n\n`
     + `${result_message}\n\n`
-    + `### 제출 일자\n\n`
-    + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language)
-    + `### 문제 설명\n\n`
-    + `${problem_description}\n\n`
     + `> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges`;
   return { problemId, directory, message, fileName, readme, code };
 }
@@ -241,11 +241,11 @@ async function makeDataForBulkUpload(origin) {
     + `[문제 링크](${link}) \n\n`
     + `### 구분\n\n`
     + `${division.replace('/', ' > ')}\n\n`
-    + `### 제출 일자\n\n`
-    + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language)
     + `### 문제 설명\n\n`
     + `${problem_description}\n\n`
+    + getMarkdownCodeBlock(code, language)
+    + `### 제출 일자\n\n`
+    + `${dateInfo}\n\n`
     + `> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges`;
   return { problemId, directory, message, fileName, readme, code };
 }

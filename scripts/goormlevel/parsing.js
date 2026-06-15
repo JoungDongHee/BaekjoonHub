@@ -140,12 +140,12 @@ async function makeData({
   const readme =
     `# ${title} - ${examId}/${quizNumber} \n\n`
     + `[문제 링크](${link}) \n\n`
-    + `### 성능 요약\n\n`
-    + `메모리: ${memory}, `
-    + `시간: ${runtime}\n\n`
+    + getMarkdownCodeBlock(code, language)
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
-    + getMarkdownCodeBlock(code, language);
+    + `### 성능 요약\n\n`
+    + `메모리: ${memory}, `
+    + `시간: ${runtime}\n\n`;
 
   return { examId, quizNumber, directory, message, fileName, readme, code };
 }
