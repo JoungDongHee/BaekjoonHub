@@ -37,7 +37,7 @@ async function parseData() {
     .map((x) => convertSingleCharToDoubleChar(x))
     .reduce((a, b) => `${a}/${b}`);
   const title = document.querySelector('.algorithm-title .challenge-title').textContent.replace(/\\n/g, '').trim();
-  const problem_description = document.querySelector('div.guide-section-description > div.markdown').innerHTML;
+  const problem_description = cleanHtmlToMarkdown(document.querySelector('div.guide-section-description > div.markdown').innerHTML);
   const language_extension = document.querySelector('div.editor > ul > li.nav-item > a').innerText.split('.')[1];
   const codeTextarea = document.querySelector('textarea#code');
   const codeMirrorEl = document.querySelector('.CodeMirror');
@@ -193,7 +193,7 @@ async function fetchProblemCodeAndData(problemInfo) {
 
     // Extract problem description
     const descEl = doc.querySelector('div.guide-section-description > div.markdown');
-    const problem_description = descEl ? descEl.innerHTML : '';
+    const problem_description = descEl ? cleanHtmlToMarkdown(descEl.innerHTML) : '';
 
     // Extract division from breadcrumb
     const breadcrumb = doc.querySelector('ol.breadcrumb');

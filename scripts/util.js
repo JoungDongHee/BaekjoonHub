@@ -340,10 +340,74 @@ function getMarkdownCodeBlock(code, language) {
   return `### 제출 코드\n\n\`\`\`${lang}\n${code}\n\`\`\`\n\n`;
 }
 
+/**
+ * HTML 문자열을 깔끔한 마크다운 문법으로 변환합니다.
+ * @param {string} html - HTML 문자열
+ * @returns {string} - 변환된 마크다운 문자열
+ */
+function cleanHtmlToMarkdown(html) {
+  if (isEmpty(html)) return '';
+
+  let markdown = html;
+
+  // 1. 주석 제거
+  markdown = markdown.replace(/<!--[\s\S]*?-->/g, '');
+
+  // 2. 제목 태그 변환
+  markdown = markdown.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n');
+  markdown = markdown.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n');
+  markdown = markdown.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n');
+  markdown = markdown.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, '\n#### $1\n');
+  markdown = markdown.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, '\n##### $1\n');
+  markdown = markdown.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, '\n###### $1\n');
+
+  // 3. 줄바꿈 태그 변환
+  markdown = markdown.replace(/<br\s*\/?>/gi, '\n');
+
+  // 4. 문단 태그 변환
+  markdown = markdown.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '\n$1\n');
+
+  // 5. 강조 태그 변환 (b, strong)
+  markdown = markdown.replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, '**$1**');
+  markdown = markdown.replace(/<b[^>]*>([\s\S]*?)<\/b>/gi, '**$1**');
+
+  // 6. 이탤릭 태그 변환 (i, em)
+  markdown = markdown.replace(/<em[^>]*>([\s\S]*?)<\/em>/gi, '*$1*');
+  markdown = markdown.replace(/<i[^>]*>([\s\S]*?)<\/i>/gi, '*$1*');
+
+  // 7. 인라인 코드 태그 변환 (code)
+  markdown = markdown.replace(/<code[^>]*>([\s\S]*?)<\/code>/gi, '`$1`');
+
+  // 8. 가로 구분선 변환 (hr)
+  markdown = markdown.replace(/<hr\s*\/?>/gi, '\n---\n');
+
+  // 9. 리스트 태그 변환 (ul, ol, li)
+  markdown = markdown.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '* $1\n');
+  markdown = markdown.replace(/<ul[^>]*>([\s\S]*?)<\/ul>/gi, '\n$1\n');
+  markdown = markdown.replace(/<ol[^>]*>([\s\S]*?)<\/ol>/gi, '\n$1\n');
+
+  // 10. 불필요한 div, span, pre 태그 제거
+  markdown = markdown.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, '\n```\n$1\n```\n');
+  markdown = markdown.replace(/<div[^>]*>([\s\S]*?)<\/div>/gi, '\n$1\n');
+  markdown = markdown.replace(/<span[^>]*>([\s\S]*?)<\/span>/gi, '$1');
+
+  // 11. 링크 태그 변환 (a)
+  markdown = markdown.replace(/<a[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)');
+
+  // 12. 연속된 공백 및 줄바꿈 정리
+  markdown = markdown.replace(/\n{3,}/g, '\n\n');
+
+  // 13. HTML 엔티티 unescape
+  markdown = unescapeHtml(markdown);
+
+  return markdown.trim();
+}
+
 if (typeof __DEV__ !== "undefined") {
   var exports = (module.exports = {});
   exports.filter = filter;
   exports.getMarkdownCodeBlock = getMarkdownCodeBlock;
+  exports.cleanHtmlToMarkdown = cleanHtmlToMarkdown;
 }
 
 

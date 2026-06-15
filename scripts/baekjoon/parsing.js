@@ -229,9 +229,9 @@ function parseProblemDescription(doc = document) {
   if (isNull(descEl)) return {};
   convertImageTagAbsoluteURL(descEl); //이미지에 상대 경로가 있을 수 있으므로 이미지 경로를 절대 경로로 전환 합니다.
   const problemId = doc.getElementsByTagName('title')[0]?.textContent?.split(':')[0]?.replace(/[^0-9]/, '') || '';
-  const problem_description = unescapeHtml(descEl.innerHTML.trim());
-  const problem_input = doc.getElementById('problem_input')?.innerHTML.trim?.().unescapeHtml?.() || 'Empty'; // eslint-disable-line
-  const problem_output = doc.getElementById('problem_output')?.innerHTML.trim?.().unescapeHtml?.() || 'Empty'; // eslint-disable-line
+  const problem_description = cleanHtmlToMarkdown(descEl.innerHTML);
+  const problem_input = doc.getElementById('problem_input') ? cleanHtmlToMarkdown(doc.getElementById('problem_input').innerHTML) : 'Empty';
+  const problem_output = doc.getElementById('problem_output') ? cleanHtmlToMarkdown(doc.getElementById('problem_output').innerHTML) : 'Empty';
   const samples = parseSampleData(doc);
   if (problemId && problem_description) {
     log(`문제번호 ${problemId}의 내용을 저장합니다.`);
