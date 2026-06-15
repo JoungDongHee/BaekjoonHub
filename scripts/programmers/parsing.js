@@ -85,7 +85,6 @@ async function makeData(origin) {
   const message = `[${levelWithLv}] Title: ${title}, Time: ${runtime}, Memory: ${memory} -BaekjoonHub`;
   const fileName = `${convertSingleCharToDoubleChar(title)}.${language_extension}`;
   const dateInfo = getDateString(new Date(Date.now()));
-  // prettier-ignore
   const readme =
     `# [${levelWithLv}] ${title} - ${problemId} \n\n`
     + `[문제 링크](${link}) \n\n`
@@ -98,6 +97,7 @@ async function makeData(origin) {
     + `${result_message}\n\n`
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
+    + getMarkdownCodeBlock(code, language)
     + `### 문제 설명\n\n`
     + `${problem_description}\n\n`
     + `> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges`;
@@ -243,6 +243,7 @@ async function makeDataForBulkUpload(origin) {
     + `${division.replace('/', ' > ')}\n\n`
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
+    + getMarkdownCodeBlock(code, language)
     + `### 문제 설명\n\n`
     + `${problem_description}\n\n`
     + `> 출처: 프로그래머스 코딩 테스트 연습, https://school.programmers.co.kr/learn/challenges`;

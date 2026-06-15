@@ -137,7 +137,6 @@ async function makeData({
   const message = `[난이도 ${difficulty}] Title: ${title}, Time: ${runtime}, Memory: ${memory} -BaekjoonHub`;
   const fileName = `${convertSingleCharToDoubleChar(title)}.${languageExtension}`;
   const dateInfo = getDateString(new Date(Date.now()));
-  // prettier-ignore
   const readme =
     `# ${title} - ${examId}/${quizNumber} \n\n`
     + `[문제 링크](${link}) \n\n`
@@ -146,6 +145,7 @@ async function makeData({
     + `시간: ${runtime}\n\n`
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
+    + getMarkdownCodeBlock(code, language);
 
   return { examId, quizNumber, directory, message, fileName, readme, code };
 }

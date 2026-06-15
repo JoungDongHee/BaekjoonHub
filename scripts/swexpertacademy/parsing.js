@@ -223,7 +223,6 @@ async function makeData(origin) {
   const message = `[${level}] Title: ${title}, Time: ${runtime}, Memory: ${memory} -BaekjoonHub`;
   const fileName = `${convertSingleCharToDoubleChar(title)}.${extension}`;
   const dateInfo = isEmpty(submissionTime) ? getDateString(new Date(Date.now())) : submissionTime;
-  // prettier-ignore
   const readme =
     `# [${level}] ${title} - ${problemId} \n\n`
     + `[문제 링크](${link}) \n\n`
@@ -233,7 +232,7 @@ async function makeData(origin) {
     + `코드길이: ${length} Bytes\n\n`
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
-    + `\n\n`
+    + getMarkdownCodeBlock(code, language)
     + `> 출처: SW Expert Academy, https://swexpertacademy.com/main/code/problem/problemList.do`;
   return { problemId, directory, message, fileName, readme, code };
 }
@@ -465,7 +464,7 @@ async function makeDataForBulkUploadSWEA(origin) {
     + `코드길이: ${length} Bytes\n\n`
     + `### 제출 일자\n\n`
     + `${dateInfo}\n\n`
-    + `\n\n`
+    + getMarkdownCodeBlock(code, language)
     + `> 출처: SW Expert Academy, https://swexpertacademy.com/main/code/problem/problemList.do`;
   return { problemId, directory, message, fileName, readme, code };
 }

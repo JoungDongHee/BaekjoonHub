@@ -294,9 +294,56 @@ function combine(a, b) {
   return a.map((x, i) => ({ ...x, ...b[i] }));
 }
 
+/**
+ * 제출 코드와 언어 정보를 바탕으로 마크다운 코드 블록을 생성합니다.
+ * @param {string} code - 제출 코드 내용
+ * @param {string} language - 언어 이름 또는 확장자
+ * @returns {string} - 마크다운 코드 블록 문자열
+ */
+function getMarkdownCodeBlock(code, language) {
+  if (isEmpty(code)) return '';
+  
+  let lang = (language || '').toLowerCase().trim();
+  
+  if (lang.includes('c++') || lang === 'cc' || lang === 'cpp') {
+    lang = 'cpp';
+  } else if (lang.includes('python') || lang.includes('pypy') || lang === 'py') {
+    lang = 'python';
+  } else if (lang.includes('javascript') || lang.includes('node') || lang === 'js') {
+    lang = 'javascript';
+  } else if (lang.includes('typescript') || lang === 'ts') {
+    lang = 'typescript';
+  } else if (lang.includes('c#') || lang === 'cs' || lang === 'csharp') {
+    lang = 'csharp';
+  } else if (lang === 'c') {
+    lang = 'c';
+  } else if (lang.includes('kotlin') || lang === 'kt') {
+    lang = 'kotlin';
+  } else if (lang.includes('java')) {
+    lang = 'java';
+  } else if (lang.includes('swift')) {
+    lang = 'swift';
+  } else if (lang.includes('go')) {
+    lang = 'go';
+  } else if (lang.includes('rust') || lang === 'rs') {
+    lang = 'rust';
+  } else if (lang.includes('ruby') || lang === 'rb') {
+    lang = 'ruby';
+  } else if (lang.includes('scala')) {
+    lang = 'scala';
+  } else if (lang.includes('bash') || lang.includes('sh')) {
+    lang = 'bash';
+  } else {
+    lang = lang.replace(/[^a-z0-9]/g, '');
+  }
+  
+  return `### 제출 코드\n\n\`\`\`${lang}\n${code}\n\`\`\`\n\n`;
+}
+
 if (typeof __DEV__ !== "undefined") {
   var exports = (module.exports = {});
   exports.filter = filter;
+  exports.getMarkdownCodeBlock = getMarkdownCodeBlock;
 }
 
 
