@@ -79,14 +79,14 @@ async function beginUpload(parsedData) {
       await versionUpdate();
     }
 
-    /* 현재 제출하려는 소스코드가 기존 업로드한 내용과 같다면 중지 */
-    const cachedSHA = await getStatsSHAfromPath(`${hook}/${directory}/${fileName}`);
-    const calcSHA = calculateBlobSHA(code);
+    /* 현재 제출하려는 README.md가 기존 업로드한 내용과 같다면 중지 */
+    const cachedSHA = await getStatsSHAfromPath(`${hook}/${directory}/README.md`);
+    const calcSHA = calculateBlobSHA(readme);
     log('cachedSHA', cachedSHA, 'calcSHA', calcSHA);
 
     if (isNull(cachedSHA)) {
       /* 로컬 캐시가 없는 경우 원격 저장소에서 파일 존재 여부 실시간 확인 */
-      const remoteFile = await getFile(hook, token, `${directory}/${fileName}`);
+      const remoteFile = await getFile(hook, token, `${directory}/README.md`);
       if (remoteFile && remoteFile.sha === calcSHA) {
         markUploadedCSS(stats.branches, directory);
         console.log('원격 저장소에 동일한 파일이 존재하여 업로드를 건너뜁니다.');

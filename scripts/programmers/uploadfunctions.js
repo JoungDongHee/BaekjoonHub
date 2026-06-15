@@ -45,14 +45,12 @@ async function upload(token, hook, sourceText, readmeText, directory, filename, 
   stats.branches[hook] = default_branch;
   const refData = await git.getReference(default_branch);
   const { refSHA, ref } = refData;
-  const source = await git.createBlob(sourceText, `${directory}/${filename}`); // 소스코드 파일
   const readme = await git.createBlob(readmeText, `${directory}/README.md`); // readme 파일
-  const treeData = await git.createTree(refSHA, [source, readme]);
+  const treeData = await git.createTree(refSHA, [readme]);
   const commitSHA = await git.createCommit(commitMessage, treeData.sha, refSHA);
   await git.updateHead(ref, commitSHA);
 
   /* stats의 값을 갱신합니다. */
-  updateObjectDatafromPath(stats.submission, `${hook}/${source.path}`, source.sha);
   updateObjectDatafromPath(stats.submission, `${hook}/${readme.path}`, readme.sha);
   await saveStats(stats);
   // 콜백 함수 실행
@@ -97,14 +95,7 @@ async function uploadAllSolvedProblemProgrammers() {
       if (!isEmpty(bojData.code) && !isEmpty(bojData.readme)) {
         zip
           .folder(bojData.directory)
-          .file(bojData.fileName, bojData.code)
           .file('README.md', bojData.readme);
-        tree_items.push({
-          path: `${bojData.directory}/${bojData.fileName}`,
-          mode: '100644',
-          type: 'blob',
-          content: bojData.code,
-        });
         tree_items.push({
           path: `${bojData.directory}/README.md`,
           mode: '100644',
